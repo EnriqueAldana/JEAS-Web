@@ -479,13 +479,16 @@
             e.preventDefault();
 
             let datos = new FormData(formulario);
-
+            console.log([...datos])
             let peticion = {
                 method:'POST',
-                body:datos,
+                headers: {
+                    'Content-Type': 'application/json'
+                 },
+                body: JSON.stringify(Object.fromEntries(datos)),
             }
 
-            fetch('http://cerometros.com:8080/email/form',peticion)
+            fetch('https://sftm9jhen6.execute-api.us-east-2.amazonaws.com/Inicial/emailSender',peticion)
                 .then(respuesta => respuesta.json())
                 .then(respuesta =>{
                    console.log('respuesta',respuesta)
@@ -498,7 +501,7 @@
                         icon: "error",
                         title: "Oops...",
                         text: "¡ Ha habido un error, intente más tarde !",
-                        footer: '<a href="#">Intentelo más tarde?</a>'
+                        footer: '<a href="#">Intentelo más tarde</a>'
                         });
                    }     
                 }).catch(error =>{
